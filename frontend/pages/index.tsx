@@ -1,23 +1,28 @@
 import type { NextPage } from 'next';
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
-import Button from '@mui/material/Button';
+import { Button } from '@mui/material';
 
 import { connect, sendMessage, SocketData } from '../modules/Home/api/socket';
 import Header from '../modules/Home/components/Header';
 import ChatHistory from '../modules/Home/components/ChatHistory';
+import ChatInput from '../modules/Home/components/ChatInput';
 
 const Home: NextPage = () => {
   const [chatHistory, setChatHistory] = useState<SocketData[]>([]);
+  const [inputChat, setInputChat] = useState('Hello world');
+
+  console.log('input chat state:', inputChat);
 
   useEffect(() => {
-    connect(({ data }) => {
+    connect((data) => {
       setChatHistory((prev) => [...prev, data]);
     });
   }, []);
 
   const handleSend = () => {
-    sendMessage({ message: 'Hello from Next' });
+    sendMessage({ message: inputChat });
+    setInputChat('');
   };
 
   return (
@@ -31,6 +36,10 @@ const Home: NextPage = () => {
       <main>
         <Header />
         <ChatHistory chatHistory={chatHistory} />
+        <ChatInput
+          value={inputChat}
+          onChange={(e) => setInputChat(e.target.value)}
+        />
         <Button variant="contained" onClick={handleSend}>
           Send Message
         </Button>

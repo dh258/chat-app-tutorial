@@ -8,7 +8,7 @@ type Props = {
 
 const ChatHistory = ({ chatHistory }: Props) => {
   const messages = chatHistory.map((msg, index) => (
-    <Typography key={index}>{msg}</Typography>
+    <Typography key={index}>{msg.message}</Typography>
   ));
 
   return (

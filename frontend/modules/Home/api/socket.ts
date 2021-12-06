@@ -8,16 +8,18 @@ export type SocketData = {
   message: string;
 };
 
-const connect = (cb: (msg: MessageEvent<SocketData>) => void): void => {
+const connect = (cb: (msg: SocketData) => void): void => {
   console.log('[socket] Attempting connection...');
 
   socket.onopen = () => {
     console.log('[socket] Successfully connected');
   };
 
-  socket.onmessage = (msg: MessageEvent<SocketData>) => {
+  socket.onmessage = (msg: MessageEvent<string>) => {
     console.log('[socket] Incoming message: ', msg);
-    cb(msg);
+    const parsedMessage = JSON.parse(msg.data) as SocketData;
+    console.log('[socket] Parsed data:', parsedMessage);
+    cb(parsedMessage);
   };
 
   socket.onclose = (event) => {

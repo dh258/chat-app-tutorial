@@ -1,9 +1,9 @@
 import Container from './Container';
-import Typography from '@mui/material/Typography';
+import { Typography } from '@mui/material';
 
 const Header = () => (
   <Container>
-    <Typography variant="h4" component="h1" align="center">
+    <Typography variant="h5" component="h1">
       Realtime Chat App
     </Typography>
   </Container>
